@@ -68,7 +68,7 @@ export const createLobby = async (req,res) => {
     const {name} = req.body
     let newLobby 
     try{
-        newLobby = Lobby.create(name,false);
+        newLobby = await Lobby.create(name,false);
         console.log("lobby created : " + name)
         console.log(newLobby);
     }catch(err){
