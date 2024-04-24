@@ -13,7 +13,10 @@ const devConfig = {
     password :process.env.PGPASSWORD
 }
 
-const prodConfig = process.env.DATABASE_URL
+const prodConfig = {
+    connectionString: process.env.DATABASE_URL
+
+}
 
 export const pool = new Pool(devConfig)
 
