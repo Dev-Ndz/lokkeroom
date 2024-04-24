@@ -31,6 +31,7 @@ export const addUser = async (req, res) => {
     if (!await isAdmin(req.user.id, lobbyId)) return res.status(401).send('Unauthorized : this user is not an admin of this lobby');
     if (await isMember(addedUserId,lobbyId)) return res.status(400).send('User already added');
     try{
+        console.log("lobby: ",lobbyId," addedUser: ",addedUserId);
         Lobby.addUser(lobbyId,addedUserId,false)
         return res.send("user added to lobby")
     }catch(err){
