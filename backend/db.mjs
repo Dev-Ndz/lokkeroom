@@ -5,11 +5,15 @@ const { Pool } = pg
 
 dotenv.config()
 
-export const pool = new Pool({
+const devConfig = {
     host : process.env.PGHOST,
     port : process.env.PGPORT,
     database : process.env.PGDATABASE,
     user : process.env.PGUSER,
     password :process.env.PGPASSWORD
-})
+}
+
+const prodConfig = process.env.DATABASE_URL
+
+export const pool = new Pool(prodConfig)
 
