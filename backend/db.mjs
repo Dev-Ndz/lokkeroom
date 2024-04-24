@@ -15,5 +15,5 @@ const devConfig = {
 
 const prodConfig = process.env.DATABASE_URL
 
-export const pool = new Pool(prodConfig)
+export const pool = new Pool(devConfig)
 
