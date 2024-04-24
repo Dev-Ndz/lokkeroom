@@ -14,9 +14,11 @@ const devConfig = {
 }
 
 const prodConfig = {
-    connectionString: process.env.DATABASE_URL
-
+    connectionString: process.env.DATABASE_URL,
+    ssl:{
+        rejectUnauthorized: false
+    }
 }
 
-export const pool = new Pool(devConfig)
+export const pool = new Pool(prodConfig)
 
