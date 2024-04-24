@@ -32,4 +32,4 @@ server.use('/api/lobby', LobbyRoute)
 server.use('/api/messages', messagesRoute)
 // server.use('/api/user', userRoute)
 
-server.listen(3000, () => console.log('http://localhost:3000'))
+server.listen(process.env.PORT || 5000, () => console.log('ready to serve...'))
