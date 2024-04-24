@@ -56,6 +56,7 @@ export const postMessage = async (req, res) => {
     const timestamp = new Date();
     const lobbyId = req.params.lobby_id;
     const userId = req.user.id;
+    if(!await isMember(userId, lobbyId)) return res.status(401).send('Unauthorized : user is not a member of that lobby')
     try{
         Lobby.postMessage(userId,content,lobbyId);
         res.send("messsage send :"+content +"\n"+ timestamp +"\n"+lobbyId);
