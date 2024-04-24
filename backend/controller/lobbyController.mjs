@@ -70,8 +70,9 @@ export const createLobby = async (req,res) => {
     try{
         newLobby = Lobby.create(name,false);
         console.log("lobby created : " + name)
+        console.log(newLobby);
     }catch(err){
-        return res.status(500).send({ error: 'Internal server error : could not create lobby' })
+        return res.status(500).send({ error: 'Internal server error : could not create lobby', "err":err })
     }
     try{
         Lobby.addUser(req.user.id, newLobby.rows[0].id, true);
@@ -80,6 +81,6 @@ export const createLobby = async (req,res) => {
 
     }catch(err){
         console.log(err)
-        return res.status(500).send({ error: 'Internal server error : could not grant admin right' })
+        return res.status(500).send({ error: 'Internal server error : could not grant admin right' , "err":err})
     }
 }
