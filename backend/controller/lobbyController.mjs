@@ -32,7 +32,7 @@ export const addUser = async (req, res) => {
     if (await isMember(addedUserId,lobbyId)) return res.status(400).send('User already added');
     try{
         console.log("lobby: ",lobbyId," addedUser: ",addedUserId);
-        Lobby.addUser(lobbyId,addedUserId,false)
+        Lobby.addUser(addedUserId,lobbyId,false)
         return res.send("user added to lobby")
     }catch(err){
         console.log(err)
