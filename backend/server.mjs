@@ -4,6 +4,7 @@ import {bouncer} from './controller/authController.mjs'
 import { LobbyRoute } from './routes/lobby.mjs'
 import { messagesRoute } from './routes/messages.mjs'
 import cors from 'cors'
+import {pool} from "./db.mjs"
 
 const server = express()
 
