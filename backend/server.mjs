@@ -3,7 +3,7 @@ import { connexionRoute } from './routes/connexion.mjs'
 import {bouncer} from './controller/authController.mjs'
 import { LobbyRoute } from './routes/lobby.mjs'
 import { messagesRoute } from './routes/messages.mjs'
-// coucou
+import cors from 'cors'
 
 //this should be delete after test
 import { pool } from './db.mjs'
@@ -23,7 +23,7 @@ server.get('/test', async (req, res) => {
       )
     res.send(q.rows)
   })
-
+server.use(cors());
 server.use('/api',connexionRoute)
 
 server.use(bouncer)
