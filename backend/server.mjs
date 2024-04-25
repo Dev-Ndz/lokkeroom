@@ -5,9 +5,6 @@ import { LobbyRoute } from './routes/lobby.mjs'
 import { messagesRoute } from './routes/messages.mjs'
 import cors from 'cors'
 
-//this should be delete after test
-import { pool } from './db.mjs'
-
 const server = express()
 
 server.use(express.json())
