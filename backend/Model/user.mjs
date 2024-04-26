@@ -9,7 +9,7 @@ User.lobbies = async (userId) => {
         WHERE user_lobby.user_id = $1`,
         [userId]
     )
-    return query;
+    return query.rows;
 }
 
 export default User
