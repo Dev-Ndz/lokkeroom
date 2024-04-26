@@ -3,6 +3,7 @@ import { connexionRoute } from './routes/connexion.mjs'
 import {bouncer} from './controller/authController.mjs'
 import { LobbyRoute } from './routes/lobby.mjs'
 import { messagesRoute } from './routes/messages.mjs'
+import { userRoute } from './routes/user.mjs'
 import cors from 'cors'
 import {pool} from "./db.mjs"
 
@@ -28,6 +29,6 @@ server.use(bouncer)
 
 server.use('/api/lobby', LobbyRoute)
 server.use('/api/messages', messagesRoute)
-// server.use('/api/user', userRoute)
+server.use('/api/user', userRoute)
 
 server.listen(process.env.PORT || 5000, () => console.log('ready to serve...'))
