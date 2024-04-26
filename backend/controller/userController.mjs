@@ -12,7 +12,7 @@ export const getLobbies = async(req, res) => {
     }
 }
 
-// export const getUsername = (req, res) => {
+export const getUsername = (req, res) => {
 
-// }
+}
 
