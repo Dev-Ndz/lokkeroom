@@ -49,7 +49,7 @@ Lobby.removeUser = async (lobbyId, removedUserId) => {
 
 Lobby.getAllMessages = async (lobbyId) => {
     const query = await pool.query(
-        `SELECT users.nickname, messages.content, messages.timestamp 
+        `SELECT users.nickname, messages.content, messages.timestamp, messages.id 
         FROM messages
         JOIN users ON messages.user_id = users.id
         WHERE messages.lobby_id = $1`,
