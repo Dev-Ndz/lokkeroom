@@ -44,10 +44,13 @@ app.use('/api/messages', messagesRoute)
 app.use('/api/user', userRoute)
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  // socket.on('disconnect', () => {
-  //   console.log('user disconnected');
-  // });
+  console.log(`user connected: ${socket.id}`);
+
+
+  socket.on('send_message', (data) => {
+    console.log(data)
+
+  });
 });
 
 server.listen(process.env.PORT || 5000, () => console.log('ready to serve...'))
