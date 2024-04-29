@@ -25,6 +25,13 @@ export const getMessages = async (req, res) => {
         }
     }
 }
+
+export const getLobbies = async (req, res) => {
+    const userId = req.user.id
+    const lobbiesList = await Lobby.getLobbies()
+}
+
+
 export const addUser = async (req, res) => {
     const lobbyId = req.params.lobby_id;
     const{addedUserId} =req.body;

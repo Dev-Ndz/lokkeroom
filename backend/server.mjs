@@ -3,12 +3,9 @@ import { connexionRoute } from './routes/connexion.mjs'
 import {bouncer} from './controller/authController.mjs'
 import { LobbyRoute } from './routes/lobby.mjs'
 import { messagesRoute } from './routes/messages.mjs'
-
-import cors from "cors";
-
-
-//this should be delete after test
-import { pool } from './db.mjs'
+import { userRoute } from './routes/user.mjs'
+import cors from 'cors'
+import {pool} from "./db.mjs"
 
 const server = express()
 
@@ -24,8 +21,7 @@ server.get('/test', async (req, res) => {
         'SELECT * from users'
       )
     res.send(q.rows)
-});
-
+  })
 server.use(cors());
 server.use('/api',connexionRoute)
 
@@ -33,6 +29,6 @@ server.use(bouncer)
 
 server.use('/api/lobby', LobbyRoute)
 server.use('/api/messages', messagesRoute)
-// server.use('/api/user', userRoute)
+server.use('/api/user', userRoute)
 
 server.listen(process.env.PORT || 5000, () => console.log('ready to serve...'))
