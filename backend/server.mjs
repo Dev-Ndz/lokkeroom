@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
 
 
 socket.on('send_message', (data) => {
-    console.log("message recieved", data.message);
+    console.log("message recieved on lobby", data.lobbyId);
     socket.broadcast.emit("receive_message", data)
 
   });
