@@ -49,15 +49,14 @@ io.on('connection', (socket) => {
 
 socket.on('send_message', (data) => {
     console.log("message recieved", data.message);
-    io.emit("receive_message", data)
+    socket.broadcast.emit("receive_message", data)
 
   });
 
   socket.on('create_lobby', (data) => {
   console.log("lobby created", data.name);
-  io.emit("new_lobby_created", data)
+  socket.broadcast.emit("new_lobby_created", data)
   });
 });
-
 
 server.listen(process.env.PORT || 5000, () => console.log('ready to serve...'))
