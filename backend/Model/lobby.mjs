@@ -49,12 +49,13 @@ Lobby.removeUser = async (lobbyId, removedUserId) => {
 
 Lobby.getAllMessages = async (lobbyId) => {
     const query = await pool.query(
-        `SELECT users.nickname, users.id, messages.content, messages.timestamp, messages.id 
+        `SELECT users.nickname, messages.user_id, messages.content, messages.timestamp, messages.id 
         FROM messages
         JOIN users ON messages.user_id = users.id
         WHERE messages.lobby_id = $1`,
         [lobbyId]
         );
+    console.log(query)
     return query.rows;
 }
 
@@ -68,7 +69,7 @@ Lobby.postMessage = async (userId,content,lobbyId) => {
 
 Lobby.getPaginatedMessages = async (lobbyId,offset, limit) => {
     const query = await pool.query(
-        `SELECT users.nickname, messages.content, messages.timestamp 
+        `SELECT users.nickname, users.id, messages.content, messages.timestamp 
         FROM messages
         JOIN users ON messages.user_id = users.id
         WHERE messages.lobby_id = $1

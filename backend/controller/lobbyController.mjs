@@ -17,6 +17,7 @@ export const getMessages = async (req, res) => {
         }
     }else{
         try{
+
             const messages = await Lobby.getAllMessages(lobbyId);
             return res.send(messages);
         }catch(err){
