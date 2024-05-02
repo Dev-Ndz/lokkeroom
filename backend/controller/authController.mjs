@@ -101,6 +101,7 @@ export const isAdmin = async (userId,lobbyId) =>{
 }
 
 export const isMember = async (userId,lobbyId) =>{
+    console.log("checking if member :",userId,lobbyId)
     const query = await pool.query(
         `SELECT * FROM user_lobby 
         WHERE lobby_id = $1 AND user_id = $2`,

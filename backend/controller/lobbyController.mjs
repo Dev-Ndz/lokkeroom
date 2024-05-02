@@ -96,10 +96,11 @@ export const createLobby = async (req,res) => {
 }
 
 export const getUserList = async(req, res) => {
-    console.log("")
     try{
         const lobbyId =req.params.lobby_id;
-        if(!await isMember(req.user.id, lobbyId)) return res.status(401).send({message:'Unauthorized : you are not a member of this lobby'})
+        const userId = req.user.id;
+        console.log(userId, lobbyId)
+        if(!await isMember(userId, lobbyId)) return res.status(401).send({message:'Unauthorized : you are not a member of this lobby'})
         const userList = await Lobby.getUserList(lobbyId);
         res.send(userList)
     }catch(err){
