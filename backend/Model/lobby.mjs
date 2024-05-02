@@ -55,7 +55,6 @@ Lobby.getAllMessages = async (lobbyId) => {
         WHERE messages.lobby_id = $1`,
         [lobbyId]
         );
-    console.log(query)
     return query.rows;
 }
 

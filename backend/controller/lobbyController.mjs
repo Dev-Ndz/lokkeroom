@@ -12,8 +12,7 @@ export const getMessages = async (req, res) => {
             const messages = await Lobby.getPaginatedMessages(lobbyId,req.query.offset, req.query.limit);
             return res.send(messages);
         }catch(err){
-            console.log(err)
-            return res.status(500).send({ error: 'Internal server error : could not get messages' })
+            return res.status(500).send({ error: 'Internal server error : could not get messages', message:err })
         }
     }else{
         try{
@@ -21,8 +20,7 @@ export const getMessages = async (req, res) => {
             const messages = await Lobby.getAllMessages(lobbyId);
             return res.send(messages);
         }catch(err){
-            console.log(err)
-            return res.status(500).send({ error: 'Internal server error : could not get all messages'})
+            return res.status(500).send({ error: 'Internal server error : could not get all messages', message:err })
         }
     }
 }
