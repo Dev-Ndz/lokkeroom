@@ -1,5 +1,5 @@
 import User from "../Model/user.mjs"
-import { isMember} from "./authController.mjs";
+import { isAdmin} from "./authController.mjs";
 
 export const getLobbies = async(req, res) => {
     try{
@@ -11,4 +11,11 @@ export const getLobbies = async(req, res) => {
 }
 
 
-
+export const CheckIfAdmin = async(req, res) => {
+    try{
+        const bool = await isAdmin(req.user.id, req.params.lobby_id)
+        return res.send(bool);
+    }catch(err){
+        return res.status(500).send(err);
+    }
+}
