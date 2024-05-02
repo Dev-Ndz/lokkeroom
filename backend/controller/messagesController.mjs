@@ -37,7 +37,7 @@ export const getMessage = async (req, res) => {
     if (!await canModify(req.user.id,messageId)) return res.status(401).send('Unauthorized : this user is not a member of this lobby');
     try{
         const query = await pool.query(
-            `SELECT users.nickname, messages.content, messages.timestamp 
+            `SELECT users.nickname, users.id, messages.content, messages.timestamp 
             FROM messages 
             JOIN users ON messages.user_id = users.id
             WHERE messages.id = $1`,
