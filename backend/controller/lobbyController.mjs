@@ -93,3 +93,14 @@ export const createLobby = async (req,res) => {
         return res.status(500).send({ error: 'Internal server error : could not grant admin right' , "err":err})
     }
 }
+
+export const getUserList = async(req, res) => {
+    try{
+        const lobbyId =req.params.lobby_id;
+        if(!await isMember(req.user.id, lobbyId)) return res.status(401).send({message:'Unauthorized : you are not a member of this lobby'})
+        const userList = Lobby.getUserList(lobbyId);
+        res.send(userList)
+    }catch(err){
+        return res.status(500).send( {error: "could not retrieve user list"})
+    }
+}

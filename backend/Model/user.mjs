@@ -12,4 +12,5 @@ User.lobbies = async (userId) => {
     return query.rows;
 }
 
+
 export default User

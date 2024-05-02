@@ -58,6 +58,8 @@ Lobby.getAllMessages = async (lobbyId) => {
     return query.rows;
 }
 
+
+
 Lobby.postMessage = async (userId,content,lobbyId) => {
     let timestamp = new Date();
     await pool.query('INSERT INTO messages (user_id, content, timestamp, lobby_id) VALUES ($1,$2,$3,$4)',
@@ -75,6 +77,17 @@ Lobby.getPaginatedMessages = async (lobbyId,offset, limit) => {
         [lobbyId, limit, offset]
         );
     return query.rows;
+}
+
+Lobby.getUserList = async(lobbyId) => {
+    const query = await pool.query(
+        `SELECT users.nickname, users.id
+        FROM users
+        JOIN user_lobby ON users.id = user_lobby.user_id
+        WHERE user_lobby.lobby_id = $1`,
+        [lobbyId]
+    );
+    return query.rows
 }
 
 export default Lobby

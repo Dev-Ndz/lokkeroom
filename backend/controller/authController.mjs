@@ -69,7 +69,7 @@ export const login = async (req, res) => {
 export const bouncer = async (req, res, next) => {
     if (!req.headers.authorization) return res.status(401).send('Unauthorized')
   
-    try {
+    try {     
       const decoded = await verify(
         req.headers.authorization.split(' ')[1],
         process.env.JWT_SECRET
