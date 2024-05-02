@@ -59,7 +59,7 @@ export const login = async (req, res) => {
             algorithm: 'HS512',
             expiresIn: '1h',
         })
-        return res.send({ token })
+        return res.send({ token, id: result.id, nickname: result.nickname })
     } catch (err) {
         console.log(err)
         return res.status(500).send({ error: 'Cannot generate token' })
