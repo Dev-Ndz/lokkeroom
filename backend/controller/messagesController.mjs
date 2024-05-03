@@ -55,7 +55,8 @@ export const sendPrivateMessage = async (req, res) => {
     const {content} = req.body;
     const senderId =req.user.id;
     const recieverId = req.params.user_id
-    let privateLobby
+    let lobbyId;
+    let privateLobby;
     try{
         privateLobby = await Lobby.getPrivateLobby(senderId,recieverId)
         console.log(privateLobby);
@@ -63,6 +64,7 @@ export const sendPrivateMessage = async (req, res) => {
         console.log(err)
         return res.status(500).send({ error: 'Internal server error' })
     }
+
     console.log(privateLobby.rows.length)
     if (privateLobby.rows.length === 0){
         try{
@@ -87,7 +89,7 @@ export const sendPrivateMessage = async (req, res) => {
     }
     try{
         await Lobby.postMessage(senderId,content, privateLobby.rows[0].id)
-        return res.send("it worked !")
+        return res.send({privateLobby})
     }catch(err){
         console.log(err)
         return res.status(500).send({ error: 'Internal server error : last catch'})
