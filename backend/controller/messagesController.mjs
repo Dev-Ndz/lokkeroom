@@ -65,8 +65,8 @@ export const sendPrivateMessage = async (req, res) => {
         return res.status(500).send({ error: 'Internal server error' })
     }
 
-    console.log(privateLobby.rows.length)
-    if (privateLobby.rows.length === 0){
+    console.log(privateLobby.length)
+    if (privateLobby.length === 0){
         try{
             privateLobby = await Lobby.create("personal message",true)
             console.log('private lobby created');
@@ -75,20 +75,20 @@ export const sendPrivateMessage = async (req, res) => {
             return res.status(500).send({ error: 'Internal server error : couldnt create new private lobby' })
         } 
         try{
-            Lobby.addUser(senderId,privateLobby.rows[0].id,false);
+            Lobby.addUser(senderId,privateLobby[0].id,false);
         }catch(err){
             console.log(err)
             return res.status(500).send({ error: 'Internal server error : couldnt add user sender '+senderId })
         }
         try{
-            Lobby.addUser(recieverId,privateLobby.rows[0].id,false);
+            Lobby.addUser(recieverId,privateLobby[0].id,false);
         }catch(err){
             console.log(err)
             return res.status(500).send({ error: 'Internal server error : couldnt add user reciever '+recieverId })
         }
     }
     try{
-        await Lobby.postMessage(senderId,content, privateLobby.rows[0].id)
+        await Lobby.postMessage(senderId,content, privateLobby[0].id)
         return res.send({privateLobby})
     }catch(err){
         console.log(err)
