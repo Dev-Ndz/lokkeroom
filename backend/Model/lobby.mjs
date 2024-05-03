@@ -22,7 +22,7 @@ Lobby.getPrivateLobby = async (senderId,recieverId) => {
         WHERE user_lobby.user_id = $2)`,
         [senderId,recieverId]
     );
-    return query
+    return query.rows
 
 }
 
