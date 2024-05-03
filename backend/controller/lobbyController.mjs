@@ -12,16 +12,15 @@ export const getMessages = async (req, res) => {
             const messages = await Lobby.getPaginatedMessages(lobbyId,req.query.offset, req.query.limit);
             return res.send(messages);
         }catch(err){
-            console.log(err)
-            return res.status(500).send({ error: 'Internal server error : could not get messages' })
+            return res.status(500).send({ error: 'Internal server error : could not get messages', message:err })
         }
     }else{
         try{
+
             const messages = await Lobby.getAllMessages(lobbyId);
             return res.send(messages);
         }catch(err){
-            console.log(err)
-            return res.status(500).send({ error: 'Internal server error : could not get all messages'})
+            return res.status(500).send({ error: 'Internal server error : could not get all messages', message:err })
         }
     }
 }
@@ -91,5 +90,18 @@ export const createLobby = async (req,res) => {
     }catch(err){
         console.log(err)
         return res.status(500).send({ error: 'Internal server error : could not grant admin right' , "err":err})
+    }
+}
+
+export const getUserList = async(req, res) => {
+    try{
+        const lobbyId =req.params.lobby_id;
+        const userId = req.user.id;
+        console.log(userId, lobbyId)
+        if(!await isMember(userId, lobbyId)) return res.status(401).send({message:'Unauthorized : you are not a member of this lobby'})
+        const userList = await Lobby.getUserList(lobbyId);
+        res.send(userList)
+    }catch(err){
+        return res.status(500).send( {error: "could not retrieve user list"})
     }
 }

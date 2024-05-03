@@ -59,7 +59,7 @@ export const login = async (req, res) => {
             algorithm: 'HS512',
             expiresIn: '1h',
         })
-        return res.send({ token })
+        return res.send({ token, id: result.id, nickname: result.nickname })
     } catch (err) {
         console.log(err)
         return res.status(500).send({ error: 'Cannot generate token' })
@@ -69,7 +69,7 @@ export const login = async (req, res) => {
 export const bouncer = async (req, res, next) => {
     if (!req.headers.authorization) return res.status(401).send('Unauthorized')
   
-    try {
+    try {     
       const decoded = await verify(
         req.headers.authorization.split(' ')[1],
         process.env.JWT_SECRET
@@ -101,6 +101,7 @@ export const isAdmin = async (userId,lobbyId) =>{
 }
 
 export const isMember = async (userId,lobbyId) =>{
+    console.log("checking if member :",userId,lobbyId)
     const query = await pool.query(
         `SELECT * FROM user_lobby 
         WHERE lobby_id = $1 AND user_id = $2`,

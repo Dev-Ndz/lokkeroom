@@ -1,9 +1,10 @@
 import express from 'express'
-import {getMessages, postMessage, createLobby, addUser, removeUser}from '../controller/lobbyController.mjs'
+import {getMessages, postMessage, createLobby, addUser, removeUser, getUserList}from '../controller/lobbyController.mjs'
 
 const router = express.Router();
 
 
+router.get('/:lobby_id/get-userlist',getUserList);
 router.get('/:lobby_id',getMessages);
 
 router.post('/:lobby_id/add-user', addUser);

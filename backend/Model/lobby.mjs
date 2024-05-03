@@ -22,7 +22,7 @@ Lobby.getPrivateLobby = async (senderId,recieverId) => {
         WHERE user_lobby.user_id = $2)`,
         [senderId,recieverId]
     );
-    return query
+    return query.rows
 
 }
 
@@ -49,7 +49,7 @@ Lobby.removeUser = async (lobbyId, removedUserId) => {
 
 Lobby.getAllMessages = async (lobbyId) => {
     const query = await pool.query(
-        `SELECT users.nickname, messages.content, messages.timestamp 
+        `SELECT users.nickname, messages.user_id, messages.content, messages.timestamp, messages.id 
         FROM messages
         JOIN users ON messages.user_id = users.id
         WHERE messages.lobby_id = $1`,
@@ -57,6 +57,8 @@ Lobby.getAllMessages = async (lobbyId) => {
         );
     return query.rows;
 }
+
+
 
 Lobby.postMessage = async (userId,content,lobbyId) => {
     let timestamp = new Date();
@@ -66,7 +68,7 @@ Lobby.postMessage = async (userId,content,lobbyId) => {
 
 Lobby.getPaginatedMessages = async (lobbyId,offset, limit) => {
     const query = await pool.query(
-        `SELECT users.nickname, messages.content, messages.timestamp 
+        `SELECT users.nickname, users.id, messages.content, messages.timestamp 
         FROM messages
         JOIN users ON messages.user_id = users.id
         WHERE messages.lobby_id = $1
@@ -75,6 +77,17 @@ Lobby.getPaginatedMessages = async (lobbyId,offset, limit) => {
         [lobbyId, limit, offset]
         );
     return query.rows;
+}
+
+Lobby.getUserList = async(lobbyId) => {
+    const query = await pool.query(
+        `SELECT users.nickname, users.id
+        FROM users
+        JOIN user_lobby ON users.id = user_lobby.user_id
+        WHERE user_lobby.lobby_id = $1`,
+        [lobbyId]
+    );
+    return query.rows
 }
 
 export default Lobby

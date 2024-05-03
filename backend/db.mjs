@@ -5,13 +5,13 @@ const { Pool } = pg
 
 dotenv.config()
 
-const devConfig = {
-    host : process.env.PGHOST,
-    port : process.env.PGPORT,
-    database : process.env.PGDATABASE,
-    user : process.env.PGUSER,
-    password :process.env.PGPASSWORD
-}
+// const devConfig = {
+//     host : process.env.PGHOST,
+//     port : process.env.PGPORT,
+//     database : process.env.PGDATABASE,
+//     user : process.env.PGUSER,
+//     password :process.env.PGPASSWORD
+// }
 
 const prodConfig = {
     connectionString: process.env.DATABASE_URL,

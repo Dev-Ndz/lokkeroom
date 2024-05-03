@@ -37,7 +37,7 @@ export const getMessage = async (req, res) => {
     if (!await canModify(req.user.id,messageId)) return res.status(401).send('Unauthorized : this user is not a member of this lobby');
     try{
         const query = await pool.query(
-            `SELECT users.nickname, messages.content, messages.timestamp 
+            `SELECT users.nickname, users.id, messages.content, messages.timestamp 
             FROM messages 
             JOIN users ON messages.user_id = users.id
             WHERE messages.id = $1`,
@@ -55,7 +55,8 @@ export const sendPrivateMessage = async (req, res) => {
     const {content} = req.body;
     const senderId =req.user.id;
     const recieverId = req.params.user_id
-    let privateLobby
+    let lobbyId;
+    let privateLobby;
     try{
         privateLobby = await Lobby.getPrivateLobby(senderId,recieverId)
         console.log(privateLobby);
@@ -63,8 +64,9 @@ export const sendPrivateMessage = async (req, res) => {
         console.log(err)
         return res.status(500).send({ error: 'Internal server error' })
     }
-    console.log(privateLobby.rows.length)
-    if (privateLobby.rows.length === 0){
+
+    console.log(privateLobby.length)
+    if (privateLobby.length === 0){
         try{
             privateLobby = await Lobby.create("personal message",true)
             console.log('private lobby created');
@@ -73,21 +75,21 @@ export const sendPrivateMessage = async (req, res) => {
             return res.status(500).send({ error: 'Internal server error : couldnt create new private lobby' })
         } 
         try{
-            Lobby.addUser(senderId,privateLobby.rows[0].id,false);
+            Lobby.addUser(senderId,privateLobby[0].id,false);
         }catch(err){
             console.log(err)
             return res.status(500).send({ error: 'Internal server error : couldnt add user sender '+senderId })
         }
         try{
-            Lobby.addUser(recieverId,privateLobby.rows[0].id,false);
+            Lobby.addUser(recieverId,privateLobby[0].id,false);
         }catch(err){
             console.log(err)
             return res.status(500).send({ error: 'Internal server error : couldnt add user reciever '+recieverId })
         }
     }
     try{
-        await Lobby.postMessage(senderId,content, privateLobby.rows[0].id)
-        return res.send("it worked !")
+        await Lobby.postMessage(senderId,content, privateLobby[0].id)
+        return res.send({privateLobby})
     }catch(err){
         console.log(err)
         return res.status(500).send({ error: 'Internal server error : last catch'})
